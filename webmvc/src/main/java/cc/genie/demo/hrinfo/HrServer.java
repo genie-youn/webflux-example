@@ -3,6 +3,7 @@ package cc.genie.demo.hrinfo;
 import cc.genie.demo.domain.Employee;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ public class HrServer {
    */
   @GetMapping("/hr/users")
   public ResponseEntity getAllUsers() {
+    try {
     List<Employee> employees = IntStream.range(1, 6000).mapToObj(i -> {
       NumberFormat nf = new DecimalFormat("0000");
       try {
@@ -39,5 +41,8 @@ public class HrServer {
     }).collect(toList());
 
     return ResponseEntity.ok(employees);
+    } catch (IllegalStateException e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
   }
 }
