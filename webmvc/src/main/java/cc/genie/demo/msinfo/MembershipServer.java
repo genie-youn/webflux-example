@@ -1,6 +1,6 @@
-package cc.genie.demo.wtinfo;
+package cc.genie.demo.msinfo;
 
-import cc.genie.demo.domain.WorkingTimeInfo;
+import cc.genie.demo.domain.MembershipInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.http.HttpStatus;
@@ -11,21 +11,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @Slf4j
-public class WorkingTimeServer {
+public class MembershipServer {
 
-  @GetMapping("/wt/working-times/{employeeNo}")
-  public ResponseEntity getWorkingTimeByEmpNo(@PathVariable String employeeNo) {
+  @GetMapping("/ms/memberships/{employeeNo}")
+  public ResponseEntity getMembershipInfoByEmpNo(@PathVariable String employeeNo) {
     try {
-      Thread.sleep(3000);
+      Thread.sleep(1000);
     } catch (InterruptedException e) {
+      log.error(e.getMessage());
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
-    return ResponseEntity.ok(WorkingTimeInfo.builder()
+    return ResponseEntity.ok(MembershipInfo.builder()
         .employeeNo(employeeNo)
-        .totalOverWork(RandomUtils.nextLong(0, 30))
-        .totalHolidayWork(RandomUtils.nextLong(0, 30))
-        .totalHolidayNightWork(RandomUtils.nextLong(0, 30))
-        .totalNightWork(RandomUtils.nextLong(0, 30))
+        .memberPay(RandomUtils.nextInt(1,3) * 10000)
         .build());
   }
 }
