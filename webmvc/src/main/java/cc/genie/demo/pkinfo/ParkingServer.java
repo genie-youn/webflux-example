@@ -1,6 +1,6 @@
-package cc.genie.demo.msinfo;
+package cc.genie.demo.pkinfo;
 
-import cc.genie.demo.domain.MembershipInfo;
+import cc.genie.demo.domain.ParkingInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.http.HttpStatus;
@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @Slf4j
-public class MembershipServer {
+public class ParkingServer {
 
-  @GetMapping("/ms/memberships/{employeeNo}")
-  public ResponseEntity getMembershipInfoByEmpNo(@PathVariable String employeeNo) {
+  @GetMapping("/pk/parkings/{employeeNo}")
+  public ResponseEntity getParkingInfoByEmpNo(@PathVariable String employeeNo) {
     try {
       Thread.sleep(1000);
     } catch (InterruptedException e) {
       log.error(e.getMessage());
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
-    return ResponseEntity.ok(MembershipInfo.builder()
+    return ResponseEntity.ok(ParkingInfo.builder()
         .employeeNo(employeeNo)
-        .memberPay(RandomUtils.nextInt(0,3) * 10000)
+        .memberPay(RandomUtils.nextInt(0,1) * 90000)
         .build());
   }
 }
